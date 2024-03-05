@@ -19,16 +19,20 @@ public class Main {
         Set<Task> carolsTasks = TaskData.getTasks("Carol");
         sortAndPrint("Carol's Tasks", carolsTasks);
 
+        Set<Task> bobsAndCarolsTasks = getIntersect(bobsTasks, carolsTasks);
+        Set<Task> bobsAndAnnsTasks = getIntersect(bobsTasks, annsTasks);
+        Set<Task> annsAndCarolsTasks = getIntersect(annsTasks, carolsTasks);
+
         Set<Task> allTasks = getUnion(tasks, getUnion(annsTasks, getUnion(bobsTasks, carolsTasks)));
         sortAndPrint("All Tasks", allTasks);
 
         Set<Task> assignedTasks = getUnion(annsTasks, getUnion(bobsTasks, carolsTasks));
         sortAndPrint("Tasks assigned to someone", allTasks);
 
-        Set<Task> notAssignedTasks = getDifference(getDifference(getDifference(tasks, annsTasks), bobsTasks), carolsTasks);
+        Set<Task> notAssignedTasks = getDifference(tasks, assignedTasks);
         sortAndPrint("Not assigned tasks", notAssignedTasks, sortByPriority);
 
-        Set<Task> teamTasks = getIntersect(annsTasks, getIntersect(bobsTasks, carolsTasks));
+        Set<Task> teamTasks = getUnion(bobsAndAnnsTasks, getUnion(bobsAndCarolsTasks, annsAndCarolsTasks));
         sortAndPrint("Multiple assigned tasks", teamTasks, Comparator.comparing(Task::getStatus));
 
     }
